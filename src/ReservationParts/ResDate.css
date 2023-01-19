@@ -1,0 +1,20 @@
+.rdp {
+    --rdp-cell-size: 40px;
+    --rdp-accent-color: #0000ff;
+    --rdp-background-color: #e7edff;
+    --rdp-accent-color-dark: #3003e1;
+    --rdp-background-color-dark: #180270;
+    --rdp-outline: 2px solid var(var(--rdp-accent-color));
+    --rdp-outline-selected: 2px solid rgba(0,0,0,0.75);
+    margin: 1em;
+}
+
+.rdp-head_row,
+.rdp-row {
+    height: 15%;
+}
+
+.rdp-tfoot {
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
