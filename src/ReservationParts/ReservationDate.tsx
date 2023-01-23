@@ -53,7 +53,7 @@ export const ReservationDate = () => {
     }
 
     return (
-        <div>
+        <>
             <div ref={popperRef}>
                 <label>
                     Reservation Date: 
@@ -113,9 +113,10 @@ export const ReservationDate = () => {
                     </div>
                 </FocusTrap>
             )}
-        </div>
+        </>
     )
 };
+
 
 function isPastDate(date: Date) {
     return differenceInCalendarDays(date, new Date()) <0;

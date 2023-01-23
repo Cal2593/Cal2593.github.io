@@ -1,17 +1,30 @@
-import React, { useState, useRef, ChangeEventHandler } from 'react'
+import React, { useState, ChangeEventHandler } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css';
 import { ReservationDate } from './ReservationParts/ReservationDate';
+import { TimeDropdown } from './ReservationParts/ReservationTime';
+import { Signup } from './SignUpParts/SignUpForm';
 
 const container = document.getElementById('app-root')!
 const root = createRoot(container);
 
-const App = () => (
-    <>
-        <h1>Cars...so many cars...</h1>
-        <ReservationDate />
-    </>
-);
+class ReservationFields extends React.Component {
+
+
+    render() {
+        return(
+            <>
+                <h1>Cars...so many cars...</h1>
+                <div>
+                    <ReservationDate />
+                    <TimeDropdown />
+                    <Signup />
+                </div>
+            </>
+        )
+    }
+    
+};
 
 function ReservationForm() {
 const [resDate, setDate] = React.useState('');
@@ -27,14 +40,6 @@ const handleChange = (event: any) => {
     return (
         <form>
         <label>
-            Reservation date:
-            <input 
-                type="date" 
-                value={resDate} 
-                onChange={handleChange} 
-            />
-        </label>
-        <label>
             Duration of reservation:
             <input 
                 type="time" 
@@ -45,5 +50,9 @@ const handleChange = (event: any) => {
         </form>
     );
 };
+
+const App = () => {
+    return <ReservationFields/>
+}
 
 root.render(<App />);
