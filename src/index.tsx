@@ -9,16 +9,16 @@ const container = document.getElementById('app-root')!
 const root = createRoot(container);
 
 class ReservationFields extends React.Component {
-
-
     render() {
         return(
             <>
-                <h1>Cars...so many cars...</h1>
-                <div>
-                    <ReservationDate />
-                    <TimeDropdown />
-                    <Signup />
+                <div className="main">
+                    <div className='leftHand'>
+                        <ReservationDate />
+                    </div>
+                    <div className='rightHand'>
+                        <Signup />
+                    </div>
                 </div>
             </>
         )

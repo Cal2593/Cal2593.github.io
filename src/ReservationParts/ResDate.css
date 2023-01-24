@@ -7,6 +7,8 @@
     --rdp-outline: 2px solid var(var(--rdp-accent-color));
     --rdp-outline-selected: 2px solid rgba(0,0,0,0.75);
     margin: 1em;
+    margin-left: 0%;
+    max-width: 500px;
 }
 
 .rdp-head_row,

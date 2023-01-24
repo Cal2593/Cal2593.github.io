@@ -1,2 +1,15 @@
 @import '../node_modules/mini.css/dist/mini-nord.min.css';
 @import 'react-day-picker/dist/style.css';
+
+.main div{
+    float: left;
+    clear: none;
+}
+
+.leftHand {
+    float: left;
+}
+
+.rightHand {
+    float: right;
+}

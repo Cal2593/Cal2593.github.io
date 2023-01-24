@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import './SignUpForm.css';
+import { usePopper } from 'react-popper';
+import FocusTrap from 'focus-trap-react';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r,ms));
 
@@ -70,57 +72,109 @@ const SignupSchema = Yup.object().shape({
 })
 
 export function Signup() {
+    const [ isPopperOpen, setIsPopperOpen ] = useState(false);
+
+    const popperRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [ popperElement, setPopperElement ] = useState<HTMLDivElement | null>(null);
+
+    const popper = usePopper(popperRef.current, popperElement, {
+        placement: 'bottom-start'
+    });
+
+    const closePopper = () => {
+        setIsPopperOpen(false);
+        buttonRef?.current?.focus();
+    };
+
+    const handleButtonClick = () => {
+            setIsPopperOpen(true);
+    };
+
     const initialValues = { firstName: '', lastName: '', email: '', paymentPlan: '', acceptedTerms: false };
     return (
-        <div className="section">
-            <h1>Create an account!</h1>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={SignupSchema}
-
-                onSubmit={async (values) => {
-                    await sleep(500);
-                    alert(JSON.stringify(values, null, 2));
-                }}
+        <div ref={popperRef}>
+            <button
+                ref={buttonRef}
+                type="button"
+                className='createaccountbutton'
+                aria-label="Create an account"
+                onClick={handleButtonClick}
             >
-                {({ isSubmitting }) => (
-                    <Form>
-                        <MyTextInput 
-                            label="First Name"
-                            name="firstName"
-                            type="text"
-                            placeholder="Jane"
-                        />
+                Sign in / Create Account
+            </button>
+            {isPopperOpen && (
+                <FocusTrap
+                    active
+                    focusTrapOptions={{
+                        initialFocus: false,
+                        allowOutsideClick: true,
+                        clickOutsideDeactivates: true,
+                        onDeactivate: closePopper,
+                    }}
+                >
+                    <div
+                        tabIndex={-1}
+                        style={popper.styles.popper}
+                        className="dialog-sheet"
+                        {...popper.attributes.popper}
+                        ref={setPopperElement}
+                        role="dialog"
+                    >
+                        <div className="section">
+                            <h1>Create an account!</h1>
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={SignupSchema}
 
-                        <MyTextInput 
-                            label="Last Name"
-                            name="lastName"
-                            type="text"
-                            placeholder="Doe"
-                        />
+                                onSubmit={async (values) => {
+                                    await sleep(500);
+                                    setIsPopperOpen(false);
+                                    alert(JSON.stringify(values, null, 2));
+                                }}
+                            >
+                                {({ isSubmitting }) => (
+                                    <Form>
+                                        <MyTextInput 
+                                            label="First Name"
+                                            name="firstName"
+                                            type="text"
+                                            placeholder="Jane"
+                                        />
 
-                        <MyTextInput 
-                            label="Email Address"
-                            name="email"
-                            type="email"
-                            placeholder="janedoe@carssomanycars.com"
-                        />
+                                        <MyTextInput 
+                                            label="Last Name"
+                                            name="lastName"
+                                            type="text"
+                                            placeholder="Doe"
+                                        />
 
-                        <MySelect label="Subscription" name="paymentPlan">
-                            <option value="">Select a subscription</option>
-                            <option value="annual">Annual Subscription</option>
-                            <option value="monthly">Monthly Subscription</option>
-                            <option value="none">No Subscription</option>
-                        </MySelect>
+                                        <MyTextInput 
+                                            label="Email Address"
+                                            name="email"
+                                            type="email"
+                                            placeholder="janedoe@carssomanycars.com"
+                                        />
 
-                        <MyCheckbox name="acceptedTerms">
-                            I accept the terms and conditions
-                        </MyCheckbox>
+                                        <MySelect label="Subscription" name="paymentPlan">
+                                            <option value="">Select a subscription</option>
+                                            <option value="annual">Annual Subscription</option>
+                                            <option value="monthly">Monthly Subscription</option>
+                                            <option value="none">No Subscription</option>
+                                        </MySelect>
 
-                        <button type="submit" disabled={isSubmitting}>Submit</button>
-                    </Form>
-                )}
-            </Formik>
+                                        <MyCheckbox name="acceptedTerms">
+                                            I accept the terms and conditions
+                                        </MyCheckbox>
+
+                                        <button type="submit" disabled={isSubmitting}>Submit</button>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </div>
+                    </div>
+                </FocusTrap>
+            )}
         </div>
     );
 };
