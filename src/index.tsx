@@ -1,14 +1,21 @@
-import React, { useState, ChangeEventHandler } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css';
 import { ReservationDate } from './ReservationParts/ReservationDate';
 import { TimeDropdown } from './ReservationParts/ReservationTime';
 import { Signup } from './SignUpParts/SignUpForm';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Root from './routes/root';
+import ErrorPage from './pages/error-page';
+import { SignUp } from './pages/Signup';
+import { SignIn } from './pages/Signin';
+import { ContactUs } from './pages/ContactUs';
+import { MyBookings } from './pages/MyBookings';
 
 const container = document.getElementById('app-root')!
 const root = createRoot(container);
 
-class ReservationFields extends React.Component {
+class Main extends React.Component {
     render() {
         return(
             <>
@@ -26,33 +33,19 @@ class ReservationFields extends React.Component {
     
 };
 
-function ReservationForm() {
-const [resDate, setDate] = React.useState('');
-const [resStartTime, setStart] = React.useState('');
-const [resDuration, setDuration] = React.useState('');
-
-const handleChange = (event: any) => {
-    setDate(event.target.value);
-    setStart(event.target.value);
-    setDuration(event.target.value);
-};
-
-    return (
-        <form>
-        <label>
-            Duration of reservation:
-            <input 
-                type="time" 
-                value={resStartTime} 
-                onChange={handleChange} 
-            />
-        </label>
-        </form>
-    );
-};
-
 const App = () => {
-    return <ReservationFields/>
+    return <Main/>
 }
 
-root.render(<App />);
+
+root.render(
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Root />} errorElement={<ErrorPage />} />,
+            <Route path="/pages/Signin" element={<SignIn />} />
+            <Route path="/pages/Signup" element={<SignUp />} />
+            <Route path="/pages/ContactUs" element={<ContactUs />} />
+            <Route path="/pages/MyBookings" element={<MyBookings />} />
+        </Routes>
+    </BrowserRouter>
+    )
