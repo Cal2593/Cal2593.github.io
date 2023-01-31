@@ -1,5 +1,6 @@
 import React from "react";
 import './root.css';
+import { ReservationSelector } from "../ReservationParts/ReservationSelector";
 
 export default function Root() {
     return (
@@ -47,6 +48,9 @@ export default function Root() {
           </nav>
         </div>
         <div id="detail"></div>
+        <div className="res-select">
+          <ReservationSelector />
+        </div>
       </>
     );
   }

@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEventHandler } from 'react'
+import React, { useState, useRef, ChangeEventHandler, createContext, useContext } from 'react'
 import { format, differenceInCalendarDays, isValid, parse, add } from 'date-fns';
 import { DayPicker, Row, RowProps } from 'react-day-picker';
 import FocusTrap from 'focus-trap-react';
@@ -54,7 +54,7 @@ export const ReservationDate = () => {
 
     return (
         <>
-            <div ref={popperRef}>
+            <div className="resInput" ref={popperRef}>
                 <label>
                     Reservation Date: 
                     <input 
@@ -97,6 +97,7 @@ export const ReservationDate = () => {
                         role="dialog"
                     >
                         <DayPicker
+                            className='reservation-date-picker'
                             defaultMonth={new Date()}
                             fromDate={new Date()}
                             toDate={add(new Date(), {months: 6})}

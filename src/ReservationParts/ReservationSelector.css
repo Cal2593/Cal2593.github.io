@@ -1,0 +1,15 @@
+.reservationSelector {
+    width: 100%;
+}
+
+.startTimeSetter {
+    display: flex;
+}
+
+.resChecks {
+    display: flex;
+}
+
+.top {
+    display: flex;
+}
