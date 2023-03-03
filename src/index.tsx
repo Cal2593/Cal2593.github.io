@@ -48,4 +48,4 @@ root.render(
             <Route path="/pages/MyBookings" element={<MyBookings />} />
         </Routes>
     </BrowserRouter>
-    )
+)

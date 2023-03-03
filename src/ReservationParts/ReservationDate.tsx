@@ -5,95 +5,95 @@ import FocusTrap from 'focus-trap-react';
 import { usePopper } from 'react-popper';
 import './ResDate.css';
 
-export const ReservationDate = () => {
-    const [ selected, setSelected ] = useState<Date>();
-    const [ inputValue, setInputValue ] = useState<string>('');
-    const [ isPopperOpen, setIsPopperOpen ] = useState(false);
+export const ReservationDate = (props: any) => {
+    //const [ selected, setSelected ] = useState<Date>();
+    //const [ inputValue, setInputValue ] = useState<string>('');
+    //const [ isPopperOpen, setIsPopperOpen ] = useState(false);
 
-    const popperRef = useRef<HTMLDivElement>(null);
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const [ popperElement, setPopperElement ] = useState<HTMLDivElement | null>(null);
+    // const popperRef = useRef<HTMLDivElement>(null);
+    // const buttonRef = useRef<HTMLButtonElement>(null);
+    // const [ popperElement, setPopperElement ] = useState<HTMLDivElement | null>(null);
 
-    const popper = usePopper(popperRef.current, popperElement, {
-        placement: 'bottom-start'
-    });
+    // const popper = usePopper(popperRef.current, popperElement, {
+    //     placement: 'bottom-start'
+    // });
 
-    const closePopper = () => {
-        setIsPopperOpen(false);
-        buttonRef?.current?.focus();
-    }
+    // const closePopper = () => {
+    //     setIsPopperOpen(false);
+    //     buttonRef?.current?.focus();
+    // }
 
-    const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setInputValue(e.currentTarget.value);
-        const date = parse(e.currentTarget.value, 'y-MM-dd', new Date());
-        if(isValid(date)) {
-            setSelected(date);
-        }else{
-            setSelected(undefined);
-        }
-    };
+    // const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    //     setInputValue(e.currentTarget.value);
+    //     const date = parse(e.currentTarget.value, 'y-MM-dd', new Date());
+    //     if(isValid(date)) {
+    //         setSelected(date);
+    //     }else{
+    //         setSelected(undefined);
+    //     }
+    // };
 
-   const handleButtonClick = () => {
-    setIsPopperOpen(true);
-   };
+    // const handleButtonClick = () => {
+    //     setIsPopperOpen(true);
+    // };
 
-   const handleDaySelect = (date: Date) => {
-    setSelected(date);
-    if(date) {
-        setInputValue(format(date,'dd-MM-y'));
-        closePopper();
-    }else{
-        setInputValue('');
-    }
-   };
+//    const handleDaySelect = (date: Date) => {
+//     setSelected(date);
+//     if(date) {
+//         setInputValue(format(date,'dd-MM-y'));
+//         closePopper();
+//     }else{
+//         setInputValue('');
+//     }
+//    };
 
     let footer = <p>Please select a date for your reservation</p>
-    if(selected){
-        footer = <p>You have selected {format(selected,'PP')}.</p>
+    if(props.select){
+        footer = <p>You have selected {format(props.select,'PP')}.</p>
     }
 
     return (
         <>
-            <div className="resInput" ref={popperRef}>
+            <div className="resInput" ref={props.popRef}>
                 <label>
                     Reservation Date: 
                     <input 
                         type="text"
                         placeholder={format(new Date(), 'dd-MM-y')}
-                        value={inputValue}
-                        onChange={handleInputChange}
+                        value={props.inpVal}
+                        onChange={props.onChangeFunction}
                         className="input-reset pa2 ma2 bg-white black ba"
                     />
                 </label>
                 <button
-                    ref={buttonRef}
+                    ref={props.buttRef}
                     type="button"
                     className="pa2 bg-white button-reset ba"
                     aria-label="Pick a reservation date"
-                    onClick={handleButtonClick}
+                    onClick={props.onClickFunction}
                 >
                     <span role="img" aria-label="calendar icon">
                         📅
                     </span>
                 </button>
             </div>
-            {isPopperOpen && (
+            {props.isPop && (
                 <FocusTrap
                     active
                     focusTrapOptions={{
                         initialFocus: false,
                         allowOutsideClick: true,
                         clickOutsideDeactivates: true,
-                        onDeactivate: closePopper,
+                        onDeactivate: props.closePop,
                         //fallbackFocus: buttonRef.current
                     }}
                 >
                     <div
                         tabIndex={-1}
-                        style={popper.styles.popper}
+                        style={props.pop.styles.popper}
                         className="dialog-sheet"
-                        {...popper.attributes.popper}
-                        ref={setPopperElement}
+                        {...props.pop.attributes.popper}
+                        ref={props.setPopperElement}
                         role="dialog"
                     >
                         <DayPicker
@@ -107,8 +107,8 @@ export const ReservationDate = () => {
                             fixedWeeks
                             mode="single"
                             required
-                            selected={selected}
-                            onDayClick={handleDaySelect}
+                            selected={props.select}
+                            onDayClick={props.onDayClickFunction}
                             footer={footer}
                         />
                     </div>
