@@ -6,46 +6,6 @@ import { usePopper } from 'react-popper';
 import './ResDate.css';
 
 export const ReservationDate = (props: any) => {
-    //const [ selected, setSelected ] = useState<Date>();
-    //const [ inputValue, setInputValue ] = useState<string>('');
-    //const [ isPopperOpen, setIsPopperOpen ] = useState(false);
-
-    // const popperRef = useRef<HTMLDivElement>(null);
-    // const buttonRef = useRef<HTMLButtonElement>(null);
-    // const [ popperElement, setPopperElement ] = useState<HTMLDivElement | null>(null);
-
-    // const popper = usePopper(popperRef.current, popperElement, {
-    //     placement: 'bottom-start'
-    // });
-
-    // const closePopper = () => {
-    //     setIsPopperOpen(false);
-    //     buttonRef?.current?.focus();
-    // }
-
-    // const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    //     setInputValue(e.currentTarget.value);
-    //     const date = parse(e.currentTarget.value, 'y-MM-dd', new Date());
-    //     if(isValid(date)) {
-    //         setSelected(date);
-    //     }else{
-    //         setSelected(undefined);
-    //     }
-    // };
-
-    // const handleButtonClick = () => {
-    //     setIsPopperOpen(true);
-    // };
-
-//    const handleDaySelect = (date: Date) => {
-//     setSelected(date);
-//     if(date) {
-//         setInputValue(format(date,'dd-MM-y'));
-//         closePopper();
-//     }else{
-//         setInputValue('');
-//     }
-//    };
 
     let footer = <p>Please select a date for your reservation</p>
     if(props.select){
@@ -85,7 +45,6 @@ export const ReservationDate = (props: any) => {
                         allowOutsideClick: true,
                         clickOutsideDeactivates: true,
                         onDeactivate: props.closePop,
-                        //fallbackFocus: buttonRef.current
                     }}
                 >
                     <div

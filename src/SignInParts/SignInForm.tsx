@@ -3,7 +3,7 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import './SignInForm.css';
 import { Link, Route, Routes } from 'react-router-dom';
-import { SignUp } from '../pages/Signup';
+import axios from "axios";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r,ms));
 
@@ -28,8 +28,15 @@ const SigninSchema = Yup.object().shape({
         .required('Required')
 })
 
-export function Signin() {
+function sendToBackEnd(values:any){
+    console.log(values);
+    axios.post("http://localhost:8000/", values)
+        .then(response => {
+            console.log(response);
+        })
+}
 
+export function Signin() {
     const initialValues = { email: '', password: '' };
     return (
         <div className="section">
@@ -37,9 +44,12 @@ export function Signin() {
                 initialValues={initialValues}
                 validationSchema={SigninSchema}
 
-                onSubmit={async (values) => {
+                onSubmit={async (values, { setSubmitting }) => {
                     await sleep(500);
+                    console.log("Submitting");
                     alert(JSON.stringify(values, null, 2));
+                    sendToBackEnd(values);
+                    setSubmitting(false);
                 }}
             >
                 {({ isSubmitting }) => (

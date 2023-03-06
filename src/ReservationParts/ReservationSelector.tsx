@@ -83,9 +83,21 @@ function sendToBackEnd(values: any) {
     console.log(values);
     axios.post("http://localhost:8000/", values)
         .then(response => {
-            console.log(response);
+            console.log(response.data);
+            let bay: string = response.data._bayID;
+            let vehicle: string = response.data._vehicle;
+            let resDate: string = response.data._reservationDate;
+            let resStart: string = response.data._reservationStartTime;
+            let resEnd: string = response.data._reservationEndTime;
+            let resLoc: string = response.data._reservationLocation;
+            let resPrice: number = response.data._reservationPrice;
+            let notice: string = "You're going to "+ resLoc + "!\nYour vehicle with the registration " + vehicle + " has been booked into bay " + bay + " on " + resDate + " from " + resStart + " until " + resEnd + "\nThe cost for this reservation is £" + resPrice + "\nEnjoy your stay!";
+            console.log(notice);
     })
-}
+        .catch(error => {
+            console.log(error);
+    })
+};
 
 export function ReservationSelector() {
     const initialValues = {};
